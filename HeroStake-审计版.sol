@@ -815,16 +815,18 @@ contract HeroStake is Ownable{
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     //test net
-    // address private constant uniswapRouterAddress = address(0x07d090e7FcBC6AFaA507A3441C7c5eE507C457e6);
+    address private constant uniswapRouterAddress = address(0x07d090e7FcBC6AFaA507A3441C7c5eE507C457e6);
     //main net
-    address private constant uniswapRouterAddress = address(0x10ED43C718714eb63d5aA57B78B54704E256024E);
+    // address private constant uniswapRouterAddress = address(0x10ED43C718714eb63d5aA57B78B54704E256024E);
 
-    address public profitAddress = address(0xbA55C0a7D2dC9983d9164b69005204C997FAEd64);
+    address public funcAddress = address(0xDa627A5d97cFE12d19f48B9EcabfF2146DC6ceb9);
+
+    address public profitAddress = address(0xDa627A5d97cFE12d19f48B9EcabfF2146DC6ceb9);
 
     //usdt test address
-    // address public usdtAddress = address(0x337610d27c682E347C9cD60BD4b3b107C9d34dDd);
+    address public usdtAddress = address(0x337610d27c682E347C9cD60BD4b3b107C9d34dDd);
     //usdt main address
-    address public usdtAddress = address(0x55d398326f99059fF775485246999027B3197955);
+    // address public usdtAddress = address(0x55d398326f99059fF775485246999027B3197955);
     bool public _isDIS = true;
 
     IERC20 _Token; 
@@ -872,11 +874,11 @@ contract HeroStake is Ownable{
     //30%
     uint256 public _destroyBurnFee = 30;
     //burn address
-    address public burnAddress = address(0x000000000000000000000000000000000000dEaD);
+    address public burnAddress = address(0x3e2743D47Ed71D726c89D86DbCC17885D735C809);
     //40%hero+BNB
     uint256 public _destroyLiquidityFee = 40;
     //Liquidity address
-    address public liquidityAddress = address(0xB97043d10120800Fb717fDE7E8fDedC721f32910);
+    address public liquidityAddress = address(0x0eaBC9e024b381067AF7810fFd4237C36ea55e18);
 
     //hero
     uint256 public liquidityHeroNum = 0;
@@ -907,7 +909,7 @@ contract HeroStake is Ownable{
 
     uint256 public createBlockNumber = 0;
 
-    uint256 public gasPrice = 2 * 10**5;
+    uint256 public gasPrice = 2 * 10**6;
 
     struct HeroOrder{//
         bool isExist;//
@@ -922,11 +924,9 @@ contract HeroStake is Ownable{
         address tokenAddress
         ) public{
              _Token = IERC20(tokenAddress);
-            address[4] memory ads = [
-                address(0xd15b556adEaf8001ba41CE87e29aF70Fbd89D029),
-                address(0xA9e90Fe8Facff39a76586E47849D6D102C220df1),
-                address(0x5B8d0894B347DC387a44A3Dc2615fb729Cd2509f),
-                address(0x7ef248c714276616611Bf6271bA53A7D8D96256E)
+            address[2] memory ads = [
+                address(0xFe575D0c4D6802537b5951dae128503A60879F22),
+                address(0xC947879a1c5826dCdD22Fd5fFc0e974AFFB02c73)
             ]; 
             for (uint256 index = 0; index < ads.length; index++) {
                 setLpToken(ads[index], 0);
@@ -985,7 +985,7 @@ createOrder
         require(amount>stakeTokenMap[lpAddress].minAmount,"less token");
         IERC20(lpAddress).safeTransferFrom(address(msg.sender),address(this),amount);
         //lp
-        uint256 lpPrice = amount;//lphero
+        uint256 lpPrice = getLpHeroPrice(lpAddress,amount);//lphero
         
         tokenDestroy(destroyNo,lpPrice);
         
@@ -1093,6 +1093,11 @@ ERC20
     }
     /**
     takeToken
+
+    
+
+
+
 
     */
     function takeToken(uint256 takeRate,address lpAddress)public liquidityAdd changeAverage(msg.sender){
@@ -1218,6 +1223,87 @@ ERC20
         // address uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
         // stakeTokenMap[tokenAddress] = stakeToken(IERC20(uniswapV2Pair),true,_minAmount);
     }
+    //
+    function setCreditPower(address[] memory userAddress,uint256[] memory creditPower) external onlyFunction() {
+        require(userAddress.length==creditPower.length,"number error");
+
+        if(lastBlockNumber<block.number){
+            stakeTotalAverage = rewardPerToken();
+            lastBlockNumber = block.number;
+           
+            (uint256 totalProfit,uint256 leftNumber,uint256 gameProfit) = allPofit();
+            
+            if(leftNumber>0){
+                _Token.safeTransfer(burnAddress,leftNumber);
+                destroyBurnNumber = destroyBurnNumber.add(leftNumber);
+            }
+            if(gameProfit>0){
+                _Token.safeTransfer(gameProfitAddress,gameProfit);
+            }
+            
+            stakeTotalStatic = stakeTotalStatic.add(totalProfit.mul(staticProfitRatio).div(10**2));
+        }
+        uint256 tempPower = totalAllPower;
+        for (uint256 index = 0; index < userAddress.length; index++) {
+
+            if (userAddress[index] != address(0)) {
+                powerMap[userAddress[index]].ljProfit = earned(userAddress[index]);
+                powerMap[userAddress[index]].stakeAverage = stakeTotalAverage;
+            }
+            if(powerMap[userAddress[index]].creditPower != creditPower[index]){
+                
+                if(powerMap[userAddress[index]].creditPower>creditPower[index]){
+                    tempPower = tempPower.sub(powerMap[userAddress[index]].creditPower.sub(creditPower[index]));
+                }else{
+                    tempPower = tempPower.add(creditPower[index].sub(powerMap[userAddress[index]].creditPower));
+                }
+                powerMap[userAddress[index]].creditPower = creditPower[index];
+            }
+        }
+        totalAllPower = tempPower;
+    }
+    //lphero
+    function getLpHeroPrice(address lpAddress, uint256 amount) public view returns(uint256){
+        address token0 = IUniswapV2Pair(lpAddress).token0(); //lp token 
+        address token1 = IUniswapV2Pair(lpAddress).token1(); //lp token 
+        uint256 lpTotalSupply = IUniswapV2Pair(lpAddress).totalSupply();//lp token 
+        (uint256 reserves0,uint256 reserves1,) = IUniswapV2Pair(lpAddress).getReserves();//lp token 
+        
+        address[] memory mPath = new address[](2);
+        if(token0 == address(_Token)){
+            mPath[0] =  token1;
+            reserves0 = reserves1;
+        }else{
+            mPath[0] =  token0;
+        }
+        mPath[1] =  address(_Token);
+
+        uint256 token0num = amount.mul(reserves0).div(lpTotalSupply);//token0
+
+        uint256[] memory lpPrices = uniswapV2Router.getAmountsOut(token0num, mPath);//lpusdt
+        uint256 lpPrice = lpPrices[1].mul(2);
+        return lpPrice;
+    }
+    //lpusdt
+    function getLpPrice(address lpAddress, uint256 amount) public view returns(uint256){
+        address token0 = IUniswapV2Pair(lpAddress).token0(); //lp token 
+        address token1 = IUniswapV2Pair(lpAddress).token1(); //lp token 
+        uint256 lpTotalSupply = IUniswapV2Pair(lpAddress).totalSupply();//lp token 
+        (uint256 reserves0,uint256 reserves1,) = IUniswapV2Pair(lpAddress).getReserves();//lp token 
+        
+        address[] memory mPath = new address[](2);
+        if(token0 == address(_Token)){
+            mPath[0] =  token1;
+            reserves0 = reserves1;
+        }else{
+            mPath[0] =  token0;
+        }
+        mPath[1] =  usdtAddress;
+        uint256 token0num = amount.mul(reserves0).div(lpTotalSupply);//token0
+        uint256[] memory lpPrices = uniswapV2Router.getAmountsOut(token0num, mPath);//lpusdt
+        uint256 lpPrice = lpPrices[1].mul(2);
+        return lpPrice;
+    }
     //Hero price
     function getHeroPrice(uint256 amount) public view returns(uint256){
         address[] memory mPath = new address[](2);
@@ -1231,7 +1317,56 @@ ERC20
     function getStakePlanTotal() public view returns(uint256){
         return block.number.sub(createBlockNumber).mul(maxStakeNumber);
     }
-
+    function setstaticProfitRatio(uint256 number) external onlyOwner() {
+        staticProfitRatio = number;
+    }
+    function setgameProfitRatio(uint256 number) external onlyOwner() {
+        gameProfitRatio = number;
+    }
+    function setcappingPower(uint256 number) external onlyOwner() {
+        cappingPower = number;
+    }
+    function setpowerToStakeNumber(uint256 number) external onlyOwner() {
+        powerToStakeNumber = number;
+    }
+    function setmaxStakeNumber(uint256 number) external onlyOwner() {
+        maxStakeNumber = number;
+    }
+    function setgameProfitAddress(address gameAddress) external onlyOwner() {
+        gameProfitAddress = gameAddress;
+    }
+    function setdestroyBurnFee(uint256 number) external onlyOwner() {
+        _destroyBurnFee = number;
+    }
+    function setdestroyLiquidityFee(uint256 number) external onlyOwner() {
+        _destroyLiquidityFee = number;
+    }
+    function setredeemRate(uint256 number) external onlyOwner() {
+        redeemRate = number;
+    }
+    function setredeemAddress(address gameAddress) external onlyOwner() {
+        redeemAddress = gameAddress;
+    }
+    function setburnAddress(address gameAddress) external onlyOwner() {
+        burnAddress = gameAddress;
+    }
+    function setfuncAddress(address gameAddress) external onlyOwner() {
+        funcAddress = gameAddress;
+    }
+    function setProfitAddress(address gameAddress) external onlyOwner() {
+        profitAddress = gameAddress;
+    }
+    function setLiquidityAddress(address gameAddress) external onlyOwner() {
+        liquidityAddress = gameAddress;
+    }
+    function setnumAddToLiquidity(uint256 number) external onlyOwner() {
+        numAddToLiquidity = number;
+    }
+   
+    
+    function setgasPrice(uint256 number) external onlyOwner() {
+        gasPrice = number;
+    }
     function swapAndLiquify(uint256 contractTokenBalance) private {
         // split the contract balance into halves
         uint256 half = contractTokenBalance.div(2);
@@ -1282,7 +1417,7 @@ ERC20
             tokenAmount,
             0, // slippage is unavoidable
             0, // slippage is unavoidable
-            address(this),
+            liquidityAddress,
             block.timestamp
         );
         if(amountToken > 0) {
@@ -1294,13 +1429,20 @@ ERC20
         payable(profitAddress).transfer(msg.value);
         emit OrderGas(orderId, msg.value);
     }
+    
     function getDestoryNumber()public view returns(uint256){
         (,uint256 leftNumber,) = allPofit();
         return destroyBurnNumber.add(leftNumber);
     }
+    function getToken(address _token, uint256 _amount) public onlyOwner {
+      IERC20(_token).transfer(msg.sender, _amount);
+    }
     //to recieve ETH from uniswapV2Router when swaping
     receive() external payable {}
-    
+    modifier onlyFunction(){
+        require(msg.sender==funcAddress);
+        _;
+    }
     modifier onlyProfit(){
         require(msg.sender==profitAddress);
         _;
