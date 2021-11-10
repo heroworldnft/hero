@@ -505,8 +505,6 @@ library SafeERC20 {
  */
 contract Ownable is Context {
     address private _owner;
-    address private _previousOwner;
-    uint256 private _lockTime;
     event OwnershipTransferred(
         address indexed previousOwner,
         address indexed newOwner
@@ -554,26 +552,6 @@ contract Ownable is Context {
         );
         emit OwnershipTransferred(_owner, newOwner);
         _owner = newOwner;
-    }
-    function geUnlockTime() public view returns (uint256) {
-        return _lockTime;
-    }
-    //Locks the contract for owner for the amount of time provided
-    function lock(uint256 time) public virtual onlyOwner {
-        _previousOwner = _owner;
-        _owner = address(0);
-        _lockTime = now + time;
-        emit OwnershipTransferred(_owner, address(0));
-    }
-    //Unlocks the contract for owner when _lockTime is exceeds
-    function unlock() public virtual {
-        require(
-            _previousOwner == msg.sender,
-            "You don't have permission to unlock"
-        );
-        require(now > _lockTime, "Contract is locked until 7 days");
-        emit OwnershipTransferred(_owner, _previousOwner);
-        _owner = _previousOwner;
     }
 }
 // pragma solidity >=0.5.0;
@@ -935,7 +913,7 @@ contract Hero is Context, IERC20, Ownable {
     }
 
     constructor() public {
-        _balances[address(this)] = _tTotal;
+        _balances[owner()] = _tTotal;
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(uniswapRouterAddress);
         // Create a uniswap pair for this new token
         address uniswapAddress = IUniswapV2Factory(_uniswapV2Router.factory()).createPair(address(this), _uniswapV2Router.WETH());
