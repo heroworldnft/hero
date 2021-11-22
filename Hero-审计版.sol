@@ -1,28 +1,3 @@
-/**
- *Submitted for verification at BscScan.com on 2021-02-26
- */
-/**
-   #PIG
-   #LIQ+#RFI+#SHIB+#DOGE, combine together to #PIG
-    I make this #PIG to hand over it to the community.
-    Create the community by yourself if you are interested.
-    I suggest a telegram group name for you to create: https://t.me/PigTokenBSC
-   Great features:
-   3% fee auto add to the liquidity pool to locked forever when selling
-   2% fee auto distribute to all holders
-   50% burn to the black hole, with such big black hole and 3% fee, the strong holder will get a valuable reward
-   I will burn liquidity LPs to burn addresses to lock the pool forever.
-   I will renounce the ownership to burn addresses to transfer #PIG to the community, make sure it's 100% safe.
-   I will add 0.999 BNB and all the left 49.5% total supply to the pool
-   Can you make #PIG 10000000X?
-   1,000,000,000,000,000 total supply
-   5,000,000,000,000 tokens limitation for trade
-   0.5% tokens for dev
-   3% fee for liquidity will go to an address that the contract creates,
-   and the contract will sell it and add to liquidity automatically,
-   it's the best part of the #PIG idea, increasing the liquidity pool automatically,
-   help the pool grow from the small init pool.
- */
 pragma solidity ^0.6.12;
 // SPDX-License-Identifier: Unlicensed
 interface IERC20 {
@@ -554,303 +529,9 @@ contract Ownable is Context {
         _owner = newOwner;
     }
 }
-// pragma solidity >=0.5.0;
-interface IUniswapV2Factory {
-    event PairCreated(
-        address indexed token0,
-        address indexed token1,
-        address pair,
-        uint256
-    );
-    function feeTo() external view returns (address);
-    function feeToSetter() external view returns (address);
-    function getPair(address tokenA, address tokenB)
-        external
-        view
-        returns (address pair);
-    function allPairs(uint256) external view returns (address pair);
-    function allPairsLength() external view returns (uint256);
-    function createPair(address tokenA, address tokenB)
-        external
-        returns (address pair);
-    function setFeeTo(address) external;
-    function setFeeToSetter(address) external;
-}
-// pragma solidity >=0.5.0;
-interface IUniswapV2Pair {
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    function name() external pure returns (string memory);
-    function symbol() external pure returns (string memory);
-    function decimals() external pure returns (uint8);
-    function totalSupply() external view returns (uint256);
-    function balanceOf(address owner) external view returns (uint256);
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
-    function approve(address spender, uint256 value) external returns (bool);
-    function transfer(address to, uint256 value) external returns (bool);
-    function transferFrom(
-        address from,
-        address to,
-        uint256 value
-    ) external returns (bool);
-    function DOMAIN_SEPARATOR() external view returns (bytes32);
-    function PERMIT_TYPEHASH() external pure returns (bytes32);
-    function nonces(address owner) external view returns (uint256);
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external;
-    event Mint(address indexed sender, uint256 amount0, uint256 amount1);
-    event Burn(
-        address indexed sender,
-        uint256 amount0,
-        uint256 amount1,
-        address indexed to
-    );
-    event Swap(
-        address indexed sender,
-        uint256 amount0In,
-        uint256 amount1In,
-        uint256 amount0Out,
-        uint256 amount1Out,
-        address indexed to
-    );
-    event Sync(uint112 reserve0, uint112 reserve1);
-    function MINIMUM_LIQUIDITY() external pure returns (uint256);
-    function factory() external view returns (address);
-    function token0() external view returns (address);
-    function token1() external view returns (address);
-    function getReserves()
-        external
-        view
-        returns (
-            uint112 reserve0,
-            uint112 reserve1,
-            uint32 blockTimestampLast
-        );
-    function price0CumulativeLast() external view returns (uint256);
-    function price1CumulativeLast() external view returns (uint256);
-    function kLast() external view returns (uint256);
-    function mint(address to) external returns (uint256 liquidity);
-    function burn(address to)
-        external
-        returns (uint256 amount0, uint256 amount1);
-    function swap(
-        uint256 amount0Out,
-        uint256 amount1Out,
-        address to,
-        bytes calldata data
-    ) external;
-    function skim(address to) external;
-    function sync() external;
-    function initialize(address, address) external;
-}
-// pragma solidity >=0.6.2;
-interface IUniswapV2Router01 {
-    function factory() external pure returns (address);
-    function WETH() external pure returns (address);
-    function addLiquidity(
-        address tokenA,
-        address tokenB,
-        uint256 amountADesired,
-        uint256 amountBDesired,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        address to,
-        uint256 deadline
-    )
-        external
-        returns (
-            uint256 amountA,
-            uint256 amountB,
-            uint256 liquidity
-        );
-    function addLiquidityETH(
-        address token,
-        uint256 amountTokenDesired,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline
-    )
-        external
-        payable
-        returns (
-            uint256 amountToken,
-            uint256 amountETH,
-            uint256 liquidity
-        );
-    function removeLiquidity(
-        address tokenA,
-        address tokenB,
-        uint256 liquidity,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256 amountA, uint256 amountB);
-    function removeLiquidityETH(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256 amountToken, uint256 amountETH);
-    function removeLiquidityWithPermit(
-        address tokenA,
-        address tokenB,
-        uint256 liquidity,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        address to,
-        uint256 deadline,
-        bool approveMax,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external returns (uint256 amountA, uint256 amountB);
-    function removeLiquidityETHWithPermit(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline,
-        bool approveMax,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external returns (uint256 amountToken, uint256 amountETH);
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapTokensForExactTokens(
-        uint256 amountOut,
-        uint256 amountInMax,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapExactETHForTokens(
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external payable returns (uint256[] memory amounts);
-    function swapTokensForExactETH(
-        uint256 amountOut,
-        uint256 amountInMax,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapExactTokensForETH(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapETHForExactTokens(
-        uint256 amountOut,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external payable returns (uint256[] memory amounts);
-    function quote(
-        uint256 amountA,
-        uint256 reserveA,
-        uint256 reserveB
-    ) external pure returns (uint256 amountB);
-    function getAmountOut(
-        uint256 amountIn,
-        uint256 reserveIn,
-        uint256 reserveOut
-    ) external pure returns (uint256 amountOut);
-    function getAmountIn(
-        uint256 amountOut,
-        uint256 reserveIn,
-        uint256 reserveOut
-    ) external pure returns (uint256 amountIn);
-    function getAmountsOut(uint256 amountIn, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
-    function getAmountsIn(uint256 amountOut, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
-}
-// pragma solidity >=0.6.2;
-interface IUniswapV2Router02 is IUniswapV2Router01 {
-    function removeLiquidityETHSupportingFeeOnTransferTokens(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256 amountETH);
-    function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline,
-        bool approveMax,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external returns (uint256 amountETH);
-    function swapExactTokensForTokensSupportingFeeOnTransferTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external;
-    function swapExactETHForTokensSupportingFeeOnTransferTokens(
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external payable;
-    function swapExactTokensForETHSupportingFeeOnTransferTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external;
-}
-
-
 contract Hero is Context, IERC20, Ownable {
     using SafeMath for uint256;
     using Address for address;
-    // using SafeERC20 for IERC20;
-    //test net
-    // address private constant uniswapRouterAddress = address(0x07d090e7FcBC6AFaA507A3441C7c5eE507C457e6);
-    //main net
-    address private constant uniswapRouterAddress = address(0x10ED43C718714eb63d5aA57B78B54704E256024E);
 
     mapping(address => uint256) private _balances;
 
@@ -859,74 +540,43 @@ contract Hero is Context, IERC20, Ownable {
     mapping(address => mapping(address => uint256)) private _allowances;
     
 
-    uint256 private _tTotal = 210000000 * 10**9;
+    uint256 private constant _tTotal = 210000000 * 10**9;
 
-    string private _name = "hero";
-    string private _symbol = "hero";
-    uint8 private _decimals = 9;
+    string private constant _name = "hero";
+    string private constant _symbol = "hero";
+    uint8 private constant _decimals = 9;
 
-    // uint256 public _maxTxAmount = 10000000000 * 10**6 * 10**9;
-    uint256 private numTokensSellToAddToLiquidity = 50 * 10**9;//1 yi
-
-    uint256 private burnMaxNumber = 189000000 * 10**9;
+    uint256 private constant burnMaxNumber = 189000000 * 10**9;
 
     uint256 public burnNumber = 0;
-    //burn address
-    address public burnAddress = address(0x000000000000000000000000000000000000dEaD);
+    
+    address public constant burnAddress = address(0x000000000000000000000000000000000000dEaD);
 
-    //tribe inspire address
+    
     address public tribeAddress = address(0xDa627A5d97cFE12d19f48B9EcabfF2146DC6ceb9);
 
-    //Liquify address
-    address public liquifyAddress = address(0xB97043d10120800Fb717fDE7E8fDedC721f32910);
 
-    // //sell
-    uint256 public _sellLiquidityFee = 5 * 4;
-    uint256 private _previousSellLiquidityFee = _sellLiquidityFee;
-
-    uint256 public _sellBurnFee = 5 * 3;
+    uint256 public _sellBurnFee = 5 * 7;
     uint256 private _previousSellBurnFee = _sellBurnFee;
 
     uint256 public _tribeInspireFee = 5 * 3;
     uint256 private _previousTribeInspireFee = _tribeInspireFee;
 
-    IUniswapV2Router02 public immutable uniswapV2Router;
-    address public immutable uniswapV2Pair;
     mapping(address=>bool) public isPair;
+
     
-    bool inSwapAndLiquify;
-    bool public swapAndLiquifyEnabled = true;
-    // event MinTokensBeforeSwapUpdated(uint256 minTokensBeforeSwap);
-    event SwapAndLiquifyEnabledUpdated(bool enabled);
-    event SwapAndLiquify(
-        uint256 tokensSwapped,
-        uint256 ethReceived,
-        uint256 tokensIntoLiqudity
-    );
-    //全网卖出手续费
     event SellFee(uint256  val,uint256 time);
-    
-    modifier lockTheSwap {
-        inSwapAndLiquify = true;
-        _;
-        inSwapAndLiquify = false;
-    }
+
 
     constructor() public {
         _balances[owner()] = _tTotal;
-        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(uniswapRouterAddress);
-        // Create a uniswap pair for this new token
-        address uniswapAddress = IUniswapV2Factory(_uniswapV2Router.factory()).createPair(address(this), _uniswapV2Router.WETH());
-        uniswapV2Pair = uniswapAddress;
-        isPair[uniswapAddress] = true;
-        // set the rest of the contract variables
-        uniswapV2Router = _uniswapV2Router;
-        //exclude owner and this contract from fee
+        
+        isPair[address(0x10ED43C718714eb63d5aA57B78B54704E256024E)] = true;
+        
         _isExcludedFromFee[owner()] = true;
         _isExcludedFromFee[address(this)] = true;
         _isExcludedFromFee[burnAddress] = true;
-        // _isExcludedFromFee[tribeAddress] = true;
-
+        
         emit Transfer(address(0), _msgSender(), _tTotal);
 
     }
@@ -1022,27 +672,20 @@ contract Hero is Context, IERC20, Ownable {
 
 
     function removeAllFee() private {
-        if (_sellLiquidityFee == 0 &&_tribeInspireFee==0 && _sellBurnFee==0) return;
-        _previousSellLiquidityFee = _sellLiquidityFee;
+        if (_tribeInspireFee==0 && _sellBurnFee==0) return;
         _previousTribeInspireFee = _tribeInspireFee;
         _previousSellBurnFee = _sellBurnFee;
 
-        _sellLiquidityFee = 0;
         _tribeInspireFee = 0;
         _sellBurnFee = 0;
     }
     function restoreAllFee() private {
-        _sellLiquidityFee = _previousSellLiquidityFee ;
         _tribeInspireFee = _previousTribeInspireFee ;
         _sellBurnFee = _previousSellBurnFee ;
     }
     function isExcludedFromFee(address account) public view returns (bool) {
         return _isExcludedFromFee[account];
     }
-
-    
-    //to recieve ETH from uniswapV2Router when swaping
-    receive() external payable {}
     
     function _approve(
         address owner,
@@ -1068,7 +711,7 @@ contract Hero is Context, IERC20, Ownable {
         
         _balances[from] = senderBalance.sub(amount);
 
-        //buy or sell
+
         uint256 toAmount = amount;
 
         if (_isExcludedFromFee[from] || _isExcludedFromFee[to]) {
@@ -1076,25 +719,14 @@ contract Hero is Context, IERC20, Ownable {
         }
         
         if(isPair[to]){
-            //sell
-            //burn
             uint256 burnAmount = amount.mul(_sellBurnFee).div(10**3);
             if(burnNumber<burnMaxNumber){
                 _balances[burnAddress] = _balances[burnAddress].add(burnAmount);
                 burnNumber = burnNumber.add(burnAmount);
                 emit Transfer(from, burnAddress, burnAmount);
-            }
-            if(burnAmount>0){
                 toAmount = toAmount.sub(burnAmount);
             }
-            //to liquid
-            uint256 toLiquidAmount = amount.mul(_sellLiquidityFee).div(10**3);
-            _balances[address(this)] = _balances[address(this)].add(toLiquidAmount);
-            emit Transfer(from, address(this), toLiquidAmount);
-            if(toLiquidAmount>0){
-                toAmount = toAmount.sub(toLiquidAmount);
-            }
-            //tribe inspire 
+            
             uint256 tribeAmount = amount.mul(_tribeInspireFee).div(10**3);
             _balances[tribeAddress] = _balances[tribeAddress].add(tribeAmount);
             emit Transfer(from, tribeAddress, tribeAmount);
@@ -1108,79 +740,7 @@ contract Hero is Context, IERC20, Ownable {
         if (_isExcludedFromFee[from] || _isExcludedFromFee[to]) {
             restoreAllFee();
         }
-
-        //add liquidity
-        // not trigger this when pancake swap
-        uint256 contractTokenBalance = _balances[address(this)];
-        bool overMinTokenBalance = contractTokenBalance >= numTokensSellToAddToLiquidity;
-        if (
-            overMinTokenBalance &&
-            !inSwapAndLiquify &&
-            !isPair[from] &&
-            !isPair[to] &&
-            swapAndLiquifyEnabled
-        ) {
-            contractTokenBalance = numTokensSellToAddToLiquidity;
-            //add liquidity
-            swapAndLiquify(contractTokenBalance);
-        }
         emit Transfer(from, to, toAmount);
     }
-    function swapAndLiquify(uint256 contractTokenBalance) private lockTheSwap {
-        // split the contract balance into halves
-        uint256 half = contractTokenBalance.div(2);
-        uint256 otherHalf = contractTokenBalance.sub(half);
 
-        // capture the contract's current ETH balance.
-        // this is so that we can capture exactly the amount of ETH that the
-        // swap creates, and not make the liquidity event include any ETH that
-        // has been manually sent to the contract
-        uint256 initialBalance = address(this).balance;
-
-        // swap tokens for ETH
-        swapTokensForEth(half); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
-
-        // how much ETH did we just swap into?
-        uint256 receivedEth = address(this).balance.sub(initialBalance);
-
-        // add liquidity to uniswap
-        addLiquidity(otherHalf, receivedEth);
-        
-        emit SwapAndLiquify(half, receivedEth, otherHalf);
-    }
-    function swapTokensForEth(uint256 tokenAmount) private {
-        // generate the uniswap pair path of token -> weth
-        address[] memory path = new address[](2);
-        path[0] = address(this);
-        path[1] = uniswapV2Router.WETH();
-
-        _approve(address(this), address(uniswapV2Router), tokenAmount);
-
-        // make the swap
-        uniswapV2Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
-            tokenAmount,
-            0, // accept any amount of ETH
-            path,
-            address(this),
-            block.timestamp
-        );
-    }
-
-  function addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
-        // approve token transfer to cover all possible scenarios
-        _approve(address(this), address(uniswapV2Router), tokenAmount);
-
-        // add the liquidity
-        (uint256 amountToken,,) = uniswapV2Router.addLiquidityETH{value: ethAmount}(
-            address(this),
-            tokenAmount,
-            0, // slippage is unavoidable
-            0, // slippage is unavoidable
-            address(this),
-            block.timestamp
-        );
-        if(amountToken > 0) {
-          payable(liquifyAddress).transfer(address(this).balance);
-        }
-    }
 }
