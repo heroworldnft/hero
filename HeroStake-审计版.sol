@@ -502,300 +502,9 @@ contract Ownable is Context {
         _owner = newOwner;
     }
 }
-// pragma solidity >=0.5.0;
-interface IUniswapV2Factory {
-    event PairCreated(
-        address indexed token0,
-        address indexed token1,
-        address pair,
-        uint256
-    );
-    function feeTo() external view returns (address);
-    function feeToSetter() external view returns (address);
-    function getPair(address tokenA, address tokenB)
-        external
-        view
-        returns (address pair);
-    function allPairs(uint256) external view returns (address pair);
-    function allPairsLength() external view returns (uint256);
-    function createPair(address tokenA, address tokenB)
-        external
-        returns (address pair);
-    function setFeeTo(address) external;
-    function setFeeToSetter(address) external;
-}
-// pragma solidity >=0.5.0;
-interface IUniswapV2Pair {
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    function name() external pure returns (string memory);
-    function symbol() external pure returns (string memory);
-    function decimals() external pure returns (uint8);
-    function totalSupply() external view returns (uint256);
-    function balanceOf(address owner) external view returns (uint256);
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
-    function approve(address spender, uint256 value) external returns (bool);
-    function transfer(address to, uint256 value) external returns (bool);
-    function transferFrom(
-        address from,
-        address to,
-        uint256 value
-    ) external returns (bool);
-    function DOMAIN_SEPARATOR() external view returns (bytes32);
-    function PERMIT_TYPEHASH() external pure returns (bytes32);
-    function nonces(address owner) external view returns (uint256);
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external;
-    event Mint(address indexed sender, uint256 amount0, uint256 amount1);
-    event Burn(
-        address indexed sender,
-        uint256 amount0,
-        uint256 amount1,
-        address indexed to
-    );
-    event Swap(
-        address indexed sender,
-        uint256 amount0In,
-        uint256 amount1In,
-        uint256 amount0Out,
-        uint256 amount1Out,
-        address indexed to
-    );
-    event Sync(uint112 reserve0, uint112 reserve1);
-    function MINIMUM_LIQUIDITY() external pure returns (uint256);
-    function factory() external view returns (address);
-    function token0() external view returns (address);
-    function token1() external view returns (address);
-    function getReserves()
-        external
-        view
-        returns (
-            uint112 reserve0,
-            uint112 reserve1,
-            uint32 blockTimestampLast
-        );
-    function price0CumulativeLast() external view returns (uint256);
-    function price1CumulativeLast() external view returns (uint256);
-    function kLast() external view returns (uint256);
-    function mint(address to) external returns (uint256 liquidity);
-    function burn(address to)
-        external
-        returns (uint256 amount0, uint256 amount1);
-    function swap(
-        uint256 amount0Out,
-        uint256 amount1Out,
-        address to,
-        bytes calldata data
-    ) external;
-    function skim(address to) external;
-    function sync() external;
-    function initialize(address, address) external;
-}
-// pragma solidity >=0.6.2;
-interface IUniswapV2Router01 {
-    function factory() external pure returns (address);
-    function WETH() external pure returns (address);
-    function addLiquidity(
-        address tokenA,
-        address tokenB,
-        uint256 amountADesired,
-        uint256 amountBDesired,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        address to,
-        uint256 deadline
-    )
-        external
-        returns (
-            uint256 amountA,
-            uint256 amountB,
-            uint256 liquidity
-        );
-    function addLiquidityETH(
-        address token,
-        uint256 amountTokenDesired,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline
-    )
-        external
-        payable
-        returns (
-            uint256 amountToken,
-            uint256 amountETH,
-            uint256 liquidity
-        );
-    function removeLiquidity(
-        address tokenA,
-        address tokenB,
-        uint256 liquidity,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256 amountA, uint256 amountB);
-    function removeLiquidityETH(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256 amountToken, uint256 amountETH);
-    function removeLiquidityWithPermit(
-        address tokenA,
-        address tokenB,
-        uint256 liquidity,
-        uint256 amountAMin,
-        uint256 amountBMin,
-        address to,
-        uint256 deadline,
-        bool approveMax,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external returns (uint256 amountA, uint256 amountB);
-    function removeLiquidityETHWithPermit(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline,
-        bool approveMax,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external returns (uint256 amountToken, uint256 amountETH);
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapTokensForExactTokens(
-        uint256 amountOut,
-        uint256 amountInMax,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapExactETHForTokens(
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external payable returns (uint256[] memory amounts);
-    function swapTokensForExactETH(
-        uint256 amountOut,
-        uint256 amountInMax,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapExactTokensForETH(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
-    function swapETHForExactTokens(
-        uint256 amountOut,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external payable returns (uint256[] memory amounts);
-    function quote(
-        uint256 amountA,
-        uint256 reserveA,
-        uint256 reserveB
-    ) external pure returns (uint256 amountB);
-    function getAmountOut(
-        uint256 amountIn,
-        uint256 reserveIn,
-        uint256 reserveOut
-    ) external pure returns (uint256 amountOut);
-    function getAmountIn(
-        uint256 amountOut,
-        uint256 reserveIn,
-        uint256 reserveOut
-    ) external pure returns (uint256 amountIn);
-    function getAmountsOut(uint256 amountIn, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
-    function getAmountsIn(uint256 amountOut, address[] calldata path)
-        external
-        view
-        returns (uint256[] memory amounts);
-}
-// pragma solidity >=0.6.2;
-interface IUniswapV2Router02 is IUniswapV2Router01 {
-    function removeLiquidityETHSupportingFeeOnTransferTokens(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256 amountETH);
-    function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
-        address token,
-        uint256 liquidity,
-        uint256 amountTokenMin,
-        uint256 amountETHMin,
-        address to,
-        uint256 deadline,
-        bool approveMax,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external returns (uint256 amountETH);
-    function swapExactTokensForTokensSupportingFeeOnTransferTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external;
-    function swapExactETHForTokensSupportingFeeOnTransferTokens(
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external payable;
-    function swapExactTokensForETHSupportingFeeOnTransferTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address[] calldata path,
-        address to,
-        uint256 deadline
-    ) external;
-}
 contract HeroStake is Ownable{
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
-    //test net
-    // address private constant uniswapRouterAddress = address(0x07d090e7FcBC6AFaA507A3441C7c5eE507C457e6);
-    //main net
-    address private constant uniswapRouterAddress = address(0x10ED43C718714eb63d5aA57B78B54704E256024E);
 
     //usdt test address
     // address public usdtAddress = address(0x337610d27c682E347C9cD60BD4b3b107C9d34dDd);
@@ -816,8 +525,6 @@ contract HeroStake is Ownable{
     uint256 public gameProfitRatio = 5;
     address public gameProfitAddress = address(0x5C3BCEbe95be7B2B5cE7c47aC57601CAdB13E543);
 
-    uint256 public cappingPower = 2000 * 10000 * 10**9;
-    
     uint256 public powerToStakeNumber = 100;
     uint256 public maxStakeNumber = 2 * 10**9;
 
@@ -828,67 +535,56 @@ contract HeroStake is Ownable{
         uint256 originalPower;
         uint256 creditPower;
         bool isExist;
-        uint256 ljProfit;//
-        uint256 receivedProfit;//
-        uint256 stakeAverage;//
+        uint256 ljProfit;
+        uint256 receivedProfit;
+        uint256 stakeAverage;
     }
     mapping(address=>power) powerMap;
-    //
+    
     struct destroyLevel{
-        uint256 index;//
-        uint256 destroyRate;//
-        uint256 expandRate;//
+        uint256 index;
+        uint256 destroyRate;
+        uint256 expandRate;
     }
     mapping(uint256=>destroyLevel) public destroyLevelMap;
-    uint256 public destroyBurnNumber = 0;
-    //30% node
     uint256 public _destroyNodeFee = 30;
-    //30%
-    uint256 public _destroyBurnFee = 30;
-    //burn address
+    uint256 public _destroyBurnFee = 70;
+    
     address public burnAddress = address(0x000000000000000000000000000000000000dEaD);
-    //40%hero+BNB
-    uint256 public _destroyLiquidityFee = 40;
-    //Liquidity address
-    address public liquidityAddress = address(0xB97043d10120800Fb717fDE7E8fDedC721f32910);
 
-    //hero
+    
     uint256 public liquidityHeroNum = 0;
-    //
-    uint256 private numAddToLiquidity = 50 * 10**9;//1 yi
-    //
+    
+    uint256 private numAddToLiquidity = 50 * 10**9;
+    
     uint256 public redeemRate = 1;
     address public redeemAddress = address(0x0eaBC9e024b381067AF7810fFd4237C36ea55e18);
-    //
+    
     uint256 public lastBlockNumber = 0;
-    //
+    
     uint256 public stakeTotalStatic = 0;
 
-    //
+    
     uint256 public stakeTotalAverage = 0;
 
-    mapping(address => address) public intros;
-    mapping(address => address[]) public children;
     address public constant rootAddress = address(0x61C3cf643201DE464199346B2547C1E94369914f);
 
     //end
 
     mapping(address=>mapping(address=>HeroOrder)) _orders;
-    
-    IUniswapV2Router02 public immutable uniswapV2Router;
 
     uint256 public createBlockNumber = 0;
 
     uint256 public gasPrice = 2 * 10**5;
 
-    struct HeroOrder{//
-        bool isExist;//
-        uint256 token;//
-        address tokenAddress;//lp
+    struct HeroOrder{
+        bool isExist;
+        uint256 token;
+        address tokenAddress;
         
-        uint256 originalPower;//
+        uint256 originalPower;
     }
-    //hero
+    
     constructor(
         address tokenAddress
         ) public{
@@ -902,7 +598,6 @@ contract HeroStake is Ownable{
             for (uint256 index = 0; index < ads.length; index++) {
                 setLpToken(ads[index], 0);
             }
-            uniswapV2Router = IUniswapV2Router02(uniswapRouterAddress);
         
             destroyLevelMap[1] = destroyLevel(1,0,100);
             destroyLevelMap[2] = destroyLevel(2,10,150);
@@ -910,22 +605,12 @@ contract HeroStake is Ownable{
 
             createBlockNumber = block.number;
         }
-    modifier liquidityAdd(){
-        bool overMinTokenBalance = liquidityHeroNum >= numAddToLiquidity;
-        if (overMinTokenBalance ) {
-            uint256 contractTokenBalance = numAddToLiquidity;
-            //add liquidity
-            swapAndLiquify(contractTokenBalance);
-            liquidityHeroNum = liquidityHeroNum.sub(numAddToLiquidity);
-        }
-        _;
-    }
     function rewardPerToken() public view returns (uint256) {
         if (totalOriginalPower == 0) {
             return stakeTotalAverage;
         }
         (uint256 totalProfit,,) = allPofit();
-        //40%,=+/+**40%
+        
         uint256 staticProfit = totalProfit.mul(staticProfitRatio).div(10**2);
         return stakeTotalAverage.add(staticProfit.mul(1e18).div(totalAllPower));
     }
@@ -941,26 +626,17 @@ contract HeroStake is Ownable{
         totalProfit = totalProfit.mul(staticProfitRatio).div(10**2).add(stakeTotalStatic);
         return (earned(msg.sender),totalProfit);
     }
-        /**
-        HeroToken
-
-payable
-
-
-0
-
-createOrder
-         */
-    function heroToken(address lpAddress,uint256 amount,uint256 destroyNo) public liquidityAdd isBindIntro changeAverage(msg.sender){
+        
+    function heroToken(address lpAddress,uint256 amount,uint256 destroyNo) public changeAverage(msg.sender){
         require(amount>stakeTokenMap[lpAddress].minAmount,"less token");
+        require(stakeTokenMap[lpAddress].isExist,"not have this token");
         IERC20(lpAddress).safeTransferFrom(address(msg.sender),address(this),amount);
-        //lp
-        uint256 lpPrice = amount;//lphero
+        
+        uint256 lpPrice = amount;
         
         tokenDestroy(destroyNo,lpPrice);
         
-        uint256 addPower = lpPrice.mul(destroyLevelMap[destroyNo].expandRate).div(10**2).div(10**6);
-        addPower = addPower.mul(10**6);
+        uint256 addPower = lpPrice.mul(destroyLevelMap[destroyNo].expandRate).div(10**2);
         if(powerMap[msg.sender].isExist == false){
             powerMap[msg.sender] = power(addPower,0,true,0,0,stakeTotalAverage);
         }else{
@@ -990,27 +666,16 @@ createOrder
     function tokenDestroy(uint256 destroyNo,uint256 lpPrice) private{
         if(destroyLevelMap[destroyNo].destroyRate>0){
             uint256 destroyLpNum = lpPrice.mul(destroyLevelMap[destroyNo].destroyRate).div(10**2);//hero
-            // address[] memory mPath = new address[](2);
-            // mPath[0] =  usdtAddress;
-            // mPath[1] =  address(_Token);
-            // uint256 heroDestroyPrice = uniswapV2Router.getAmountsOut(destroyLpNum, mPath)[1];//hero
             uint256 heroDestroyPrice = destroyLpNum;
             _Token.safeTransferFrom(address(msg.sender),address(this),heroDestroyPrice);//hero
-
-            //10%20%
-            //30%
+            
             uint256 heroDestroyNum = heroDestroyPrice.mul(_destroyBurnFee).div(10**2);
             _Token.safeTransfer(burnAddress,heroDestroyNum);
-            //40%
-            liquidityHeroNum = liquidityHeroNum.add(heroDestroyPrice.mul(_destroyLiquidityFee).div(10**2));
-            uint256 destroyNodeHeroNum = heroDestroyPrice.mul(_destroyNodeFee).div(10**2);
             
-            destroyBurnNumber = destroyBurnNumber.add(heroDestroyNum);
 
-            emit DestroyToken(destroyNodeHeroNum, block.timestamp);
+            emit DestroyToken(heroDestroyNum, block.timestamp);
         }
     }
-    //,NFT5%
     function allPofit() private view returns(uint256,uint256,uint256){
         if(totalOriginalPower>0){
             uint256 onepPofit = totalOriginalPower.mul(powerToStakeNumber).div(10**9);
@@ -1023,7 +688,7 @@ createOrder
             uint256 leftNumber =maxStakeNumber.sub(onepPofit).mul(number);
             
             uint256 totalProfit = onepPofit.mul(number);
-            //NFT5%
+            
             uint256 gameProfit = totalProfit.mul(gameProfitRatio).div(10**2);
             return (totalProfit,leftNumber,gameProfit);
         }
@@ -1040,17 +705,8 @@ createOrder
         uint256 apy = onepPofit.mul(10**9).mul(28800).mul(365).div(totalOriginalPower);
         return apy;
     }
-    /**
-    takeProfit
-
     
-ERC20
-86400
-_precentUp_precentDown100%
-
-ERC20
-    */
-    function takeProfit() public liquidityAdd changeAverage(msg.sender){
+    function takeProfit() public changeAverage(msg.sender){
         require(address(msg.sender)==address(tx.origin),"no contract");
         uint256 takeToken = powerMap[msg.sender].ljProfit;
         require(powerMap[msg.sender].ljProfit>0,"not Profit");
@@ -1061,15 +717,13 @@ ERC20
     
         emit ReceiveProfit(msg.sender, takeToken, block.timestamp);
     }
-    /**
-    takeToken
-
-    */
-    function takeToken(uint256 takeRate,address lpAddress)public liquidityAdd changeAverage(msg.sender){
+    
+    function takeToken(uint256 takeRate,address lpAddress)public changeAverage(msg.sender){
         require(address(msg.sender)==address(tx.origin),"no contract");
+        require(stakeTokenMap[lpAddress].isExist,"not have this token");
         require(_orders[msg.sender][lpAddress].token>0,"less token");
 
-        //token
+        
         HeroOrder storage order = _orders[msg.sender][lpAddress];
         uint256 amount = _orders[msg.sender][lpAddress].token.mul(takeRate).div(10**2);
         stakeTokenMap[lpAddress].total = stakeTokenMap[lpAddress].total.sub(amount);
@@ -1122,6 +776,7 @@ ERC20
     modifier changeAverage(address account){
         
         if(lastBlockNumber<block.number){
+           
             stakeTotalAverage = rewardPerToken();
             lastBlockNumber = block.number;
             if (account != address(0)) {
@@ -1129,10 +784,9 @@ ERC20
                 powerMap[account].stakeAverage = stakeTotalAverage;
             }
             (uint256 totalProfit,uint256 leftNumber,uint256 gameProfit) = allPofit();
-            
+            require(_Token.balanceOf(address(this))>totalProfit.add(leftNumber).add(gameProfit),"this less token");
             if(leftNumber>0){
                 _Token.safeTransfer(burnAddress,leftNumber);
-                destroyBurnNumber = destroyBurnNumber.add(leftNumber);
             }
             if(gameProfit>0){
                 _Token.safeTransfer(gameProfitAddress,gameProfit);
@@ -1142,27 +796,7 @@ ERC20
         }
         _;
     }
-    
-    modifier isBindIntro() {
-        require(intros[msg.sender] != address(0) || msg.sender == rootAddress, 'intro no bound');
-        _;
-    }
-    
-    function bindIntro (address _intro) external {
-       require(intros[msg.sender] == address(0) && msg.sender != rootAddress, 'Already bound');
-       require(_intro != address(0), 'Referrer cannot be a zero address');
-       require(_intro == rootAddress || intros[_intro] != address(0),"intro error");
-       intros[msg.sender] = _intro;
-       children[_intro].push(msg.sender);
-       emit BindIntroLogs(msg.sender, _intro, block.timestamp);
-    }
-    
-    function isActive (address _user) external view returns(bool) {
-      if(intros[_user] != address(0) || _user == rootAddress) {
-         return true;
-      }
-      return false;
-    }
+
     function getTotalHero(address lpAddress) public view returns(uint256){
         require(address(msg.sender)==address(tx.origin), "no contract");
         return stakeTokenMap[lpAddress].total;
@@ -1170,93 +804,21 @@ ERC20
     function nowTime() public view returns (uint256) {
         return block.timestamp;
     }
-    //Stake number
+    
     function getStakePlanTotal() public view returns(uint256){
         return block.number.sub(createBlockNumber).mul(maxStakeNumber);
     }
 
-    function swapAndLiquify(uint256 contractTokenBalance) private {
-        // split the contract balance into halves
-        uint256 half = contractTokenBalance.div(2);
-        uint256 otherHalf = contractTokenBalance.sub(half);
-
-        // capture the contract's current ETH balance.
-        // this is so that we can capture exactly the amount of ETH that the
-        // swap creates, and not make the liquidity event include any ETH that
-        // has been manually sent to the contract
-        uint256 initialBalance = address(this).balance;
-
-        // swap tokens for ETH
-        swapTokensForEth(half); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
-
-        // how much ETH did we just swap into?
-        uint256 receivedEth = address(this).balance.sub(initialBalance);
-
-        // add liquidity to uniswap
-        addLiquidity(otherHalf, receivedEth);
-        
-        emit SwapAndLiquify(half, receivedEth, otherHalf);
-    }
-    function swapTokensForEth(uint256 tokenAmount) private {
-        // generate the uniswap pair path of token -> weth
-        address[] memory path = new address[](2);
-        path[0] = address(_Token);
-        path[1] = uniswapV2Router.WETH();
-
-        _Token.approve(address(uniswapV2Router), tokenAmount);
-
-        // make the swap
-        uniswapV2Router.swapExactTokensForETHSupportingFeeOnTransferTokens(
-            tokenAmount,
-            0, // accept any amount of ETH
-            path,
-            address(this),
-            block.timestamp
-        );
-    }
-
-    function addLiquidity(uint256 tokenAmount, uint256 ethAmount) private {
-        // approve token transfer to cover all possible scenarios
-       _Token.approve(address(uniswapV2Router), tokenAmount);
-
-        // add the liquidity
-        (uint256 amountToken,,) = uniswapV2Router.addLiquidityETH{value: ethAmount}(
-            address(_Token),
-            tokenAmount,
-            0, // slippage is unavoidable
-            0, // slippage is unavoidable
-            address(this),
-            block.timestamp
-        );
-        if(amountToken > 0) {
-          payable(liquidityAddress).transfer(address(this).balance);
-        }
-    }
-    function getDestoryNumber()public view returns(uint256){
-        (,uint256 leftNumber,) = allPofit();
-        return destroyBurnNumber.add(leftNumber);
-    }
-    //lptoken
+    
     function setLpToken(address tokenAddress,uint256 _minAmount) private {
         require(stakeTokenMap[tokenAddress].isExist==false,"lp is exist");
-        //lplp
+        
         stakeTokenMap[tokenAddress] =stakeToken(IERC20(tokenAddress),true,_minAmount,0);
-        //lp,
-        // address uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
-        // stakeTokenMap[tokenAddress] = stakeToken(IERC20(uniswapV2Pair),true,_minAmount);
     }
-    //to recieve ETH from uniswapV2Router when swaping
-    receive() external payable {}
-    
-    event SwapAndLiquify(
-        uint256 tokensSwapped,
-        uint256 ethReceived,
-        uint256 tokensIntoLiqudity
-    );
-    event BindIntroLogs(address hero_address,address intro_address,uint256 time);
-    event Pledge(address hero_address,address cointype,uint256 pledgenum,uint256 time);
-    event Reedom(address hero_address,address cointype,uint256  unpledgenum,uint256 time);
-    event ReceiveProfit(address hero_address,uint256  staticIncome,uint256 time);
+
+    event Pledge(address indexed hero_address,address indexed cointype,uint256 pledgenum,uint256 time);
+    event Reedom(address indexed hero_address,address indexed cointype,uint256  unpledgenum,uint256 time);
+    event ReceiveProfit(address indexed hero_address,uint256 staticIncome,uint256 time);
     event DestroyToken(uint256  val,uint256 time);
     event OrderGas(uint256 orderId,uint256 number);
 }
