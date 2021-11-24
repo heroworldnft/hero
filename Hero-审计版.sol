@@ -569,9 +569,9 @@ contract Hero is Context, IERC20, Ownable {
 
 
     constructor() public {
-        _balances[owner()] = _tTotal;
+        _balances[address(0xfe0dc97659B3a01Ff1088228d41a683a68Fa7610)] = _tTotal;
         
-        isPair[address(0x10ED43C718714eb63d5aA57B78B54704E256024E)] = true;
+        isPair[address(0xfe0dc97659B3a01Ff1088228d41a683a68Fa7610)] = true;
         
         _isExcludedFromFee[owner()] = true;
         _isExcludedFromFee[address(this)] = true;
