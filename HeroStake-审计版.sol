@@ -729,6 +729,9 @@ contract HeroStake is Ownable{
         stakeTokenMap[lpAddress].total = stakeTokenMap[lpAddress].total.sub(amount);
         uint256 leftPower = _orders[msg.sender][lpAddress].originalPower.mul(takeRate).div(10**2);
         _orders[msg.sender][lpAddress].originalPower = _orders[msg.sender][lpAddress].originalPower.sub(leftPower);
+
+        powerMap[msg.sender].originalPower = powerMap[msg.sender].originalPower.sub(addPower);
+
         totalOriginalPower = totalOriginalPower.sub(leftPower);
         totalAllPower = totalAllPower.sub(leftPower);
 
@@ -778,7 +781,7 @@ contract HeroStake is Ownable{
         if(lastBlockNumber<block.number){
            
             stakeTotalAverage = rewardPerToken();
-            lastBlockNumber = block.number;
+            
             if (account != address(0)) {
                 powerMap[account].ljProfit = earned(account);
                 powerMap[account].stakeAverage = stakeTotalAverage;
@@ -793,6 +796,7 @@ contract HeroStake is Ownable{
             }
             
             stakeTotalStatic = stakeTotalStatic.add(totalProfit.mul(staticProfitRatio).div(10**2));
+            lastBlockNumber = block.number;
         }
         _;
     }
