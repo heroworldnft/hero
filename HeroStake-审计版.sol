@@ -590,7 +590,7 @@ contract HeroStake is Ownable{
         ) public{
              _Token = IERC20(tokenAddress);
             address[1] memory ads = [
-                address(0x7219E10Ea5Ae37a50B1F4004b3954bd679879B97)
+                address(0x267ACD9621b9Bf7bD86A8A17f8d079AE5F709903)
             ]; 
             for (uint256 index = 0; index < ads.length; index++) {
                 setLpToken(ads[index], 0);
