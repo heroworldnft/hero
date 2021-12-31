@@ -553,7 +553,7 @@ contract Hero is Context, IERC20, Ownable {
     address public constant burnAddress = address(0x000000000000000000000000000000000000dEaD);
 
     
-    address public tribeAddress = address(0xDa627A5d97cFE12d19f48B9EcabfF2146DC6ceb9);
+    address public tribeAddress = address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9);
 
 
     uint256 public _sellBurnFee = 5 * 7;
@@ -569,7 +569,7 @@ contract Hero is Context, IERC20, Ownable {
 
 
     constructor() public {
-        _balances[address(0xfe0dc97659B3a01Ff1088228d41a683a68Fa7610)] = _tTotal;
+        _balances[address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9)] = _tTotal;
         
         isPair[address(0xfe0dc97659B3a01Ff1088228d41a683a68Fa7610)] = true;
         
@@ -577,7 +577,7 @@ contract Hero is Context, IERC20, Ownable {
         _isExcludedFromFee[address(this)] = true;
         _isExcludedFromFee[burnAddress] = true;
         
-        emit Transfer(address(0), _msgSender(), _tTotal);
+        emit Transfer(address(0), address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9), _tTotal);
 
     }
 
