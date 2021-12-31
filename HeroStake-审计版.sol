@@ -523,7 +523,7 @@ contract HeroStake is Ownable{
 
     uint256 public staticProfitRatio = 40;
     uint256 public gameProfitRatio = 5;
-    address public gameProfitAddress = address(0x9eaAb90fC76E11c638e3B0C6E6b8aC82a9A23aE8);
+    address public gameProfitAddress = address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9);
 
     uint256 public powerToStakeNumber = 100;
     uint256 public maxStakeNumber = 2 * 10**9;
@@ -567,7 +567,7 @@ contract HeroStake is Ownable{
     
     uint256 public stakeTotalAverage = 0;
 
-    address public constant rootAddress = address(0x9eaAb90fC76E11c638e3B0C6E6b8aC82a9A23aE8);
+    address public constant rootAddress = address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9);
 
     //end
 
@@ -590,7 +590,7 @@ contract HeroStake is Ownable{
         ) public{
              _Token = IERC20(tokenAddress);
             address[1] memory ads = [
-                address(0x267ACD9621b9Bf7bD86A8A17f8d079AE5F709903)
+                address(0x52f36e9017aecb9c4fd3dddc4ef931b3df5d8e60)
             ]; 
             for (uint256 index = 0; index < ads.length; index++) {
                 setLpToken(ads[index], 0);
