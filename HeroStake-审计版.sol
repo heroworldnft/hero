@@ -523,7 +523,7 @@ contract HeroStake is Ownable{
 
     uint256 public staticProfitRatio = 40;
     uint256 public gameProfitRatio = 5;
-    address public gameProfitAddress = address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9);
+    address public gameProfitAddress = address(0x000000000000000000000000000000000000dEaD);
 
     uint256 public powerToStakeNumber = 100;
     uint256 public maxStakeNumber = 2 * 10**9;
@@ -567,7 +567,7 @@ contract HeroStake is Ownable{
     
     uint256 public stakeTotalAverage = 0;
 
-    address public constant rootAddress = address(0x35E526421Be7342630c2caA36F5DD276F58b7FB9);
+    address public constant rootAddress = address(0x000000000000000000000000000000000000dEaD);
 
     //end
 
@@ -590,7 +590,7 @@ contract HeroStake is Ownable{
         ) public{
              _Token = IERC20(tokenAddress);
             address[1] memory ads = [
-                address(0x52f36e9017aecb9c4fd3dddc4ef931b3df5d8e60)
+                address(0x52F36E9017aECb9c4FD3dDDc4Ef931B3Df5D8e60)
             ]; 
             for (uint256 index = 0; index < ads.length; index++) {
                 setLpToken(ads[index], 0);
@@ -727,7 +727,7 @@ contract HeroStake is Ownable{
         uint256 leftPower = _orders[msg.sender][lpAddress].originalPower.mul(takeRate).div(10**2);
         _orders[msg.sender][lpAddress].originalPower = _orders[msg.sender][lpAddress].originalPower.sub(leftPower);
 
-        powerMap[msg.sender].originalPower = powerMap[msg.sender].originalPower.sub(addPower);
+        powerMap[msg.sender].originalPower = powerMap[msg.sender].originalPower.sub(leftPower);
 
         totalOriginalPower = totalOriginalPower.sub(leftPower);
         totalAllPower = totalAllPower.sub(leftPower);
